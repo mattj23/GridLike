@@ -26,6 +26,7 @@ namespace GridLike.Workers
     public record RegisterMessage : BaseMessage
     {
         public string Name { get; set; } = null!;
+        public string Id { get; set; } = null!;
         public string Token { get; set; } = null!;
     }
 

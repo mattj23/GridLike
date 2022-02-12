@@ -19,8 +19,8 @@ GridLike
 
    concepts
    configuration
-
-
+   operation
+   future
 
 Indices and tables
 ==================
