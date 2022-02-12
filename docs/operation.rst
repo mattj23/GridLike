@@ -163,6 +163,34 @@ Lastly, if an error occurs during the processing of a job payload, the worker sh
         "info": null
     }
 
+Worker Manager
+--------------
+
+The worker manager is the component which handles all interactions with workers after they have established a connection to the server. It's the entity on the other side of the worker/server communication discussed in the section above.
+
+The worker manager must maintain an up-to-date list of the currently connected (and recently disconnected) workers, as well as track their current state.  The manager must be able to, in a thread-safe way: 
+
+* Enroll a worker upon connection, retrieving its identity if it has one
+* Retrieve the current list of connected workers 
+* Retrieve the last known state of any worker
+* Kick workers which are unregistered after a configurable amount of time
+* Receive status, progress, and failure messages from workers and update their status accordingly
+* Query workers for their status when it is unsure or has outdated information
+* Keep track of the number of failed and successful jobs on a worker
+
 
 Job Dispatcher
 --------------
+
+As its name implies, the job dispatcher is responsible for all dispatching of jobs to available workers.  It is the conceptual bridge between the jobs and the pool of workers. It cannot interact with either directly, and must do so through the job registry and worker manager, respectively.
+
+The job dispatcher must perform the following in a thread-safe way:
+
+* Retrieve the highest priority jobs from the registry
+* Retrieve available workers from the the worker manager
+* Individually assign jobs to workers (avoiding any race conditions)
+* Determine when a job has finished and invoke a state change in the registry
+* Determine when a job has failed and invoke a state change in the registry
+* Dispatch failed jobs to a different worker than the one they last failed on
+* Lower the priority of failed jobs so that they don't clog up the work queue
+* Determine when a worker working on a job disconnects and reset the job

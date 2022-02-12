@@ -51,7 +51,7 @@ The storage provider is where the binary blobs for the job and result payloads a
 Filesystem
 ----------
 
-The simplest (and typically fastest) storage to set up is the local filesystem, however depending on how **GridLike** is deployed this may not be scalable or even feasible.  However, this is an easy way to use network storage, though it shifts the burden of configuration to the deployment environment.
+The simplest (and typically fastest) storage to set up is the local filesystem, however depending on how **GridLike** is deployed this may not be scalable or even feasible.  This can be an easy way to use network storage (such as with a mounted PVC in a K8 cluster), though it shifts the burden of configuration to the deployment environment.
 
 .. code-block:: json
 
