@@ -1,0 +1,34 @@
+﻿@page "/login"
+@attribute [AllowAnonymous]
+@inject IJSRuntime _jsRuntime
+
+<PageTitle>GridLike Sign In</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.Medium" Class="justify-content-center">
+    
+<MudCard>
+    <MudCardContent>
+        <MudForm>
+            <MudTextField Label="Username" Required="true" @bind-Value="_userName"/>
+            <MudTextField Label="Password" Required="true" @bind-Value="_password"
+                          InputType="InputType.Password"/>
+        </MudForm>
+    </MudCardContent>
+    <MudCardActions>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto"
+                   OnClick="OnLoginClick">Sign In</MudButton>
+    </MudCardActions>
+</MudCard>
+</MudContainer>
+
+@code {
+    private string? _userName;
+    private string? _password;
+
+    private async void OnLoginClick()
+    {
+        var module = await _jsRuntime.InvokeAsync<IJSObjectReference>("import", "./js/auth.js");
+        await module.InvokeVoidAsync("SignIn", _userName, _password, "/");
+    }
+    
+}

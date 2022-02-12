@@ -1,0 +1,150 @@
+@page "/"
+@using MudBlazor
+@using GridLike.Services
+@using GridLike.Data.Views
+@using System.Threading
+@using System.Reactive.Linq
+@using GridLike.Services.Storage
+
+@implements IDisposable
+@inject JobDataStore _jobStore;
+@inject WorkerManager _workers;
+
+@attribute [Authorize]
+
+<PageTitle>GridLike</PageTitle>
+
+<MudPaper Elevation="2" Class="ma-4 pa-4">
+    <h2>Workers</h2>
+    @if (!_workerViews.Any())
+    {
+        <MudAlert Severity="Severity.Warning">No worker agents are connected!</MudAlert>
+    }
+    else
+    {
+        <MudTable Items="@_workerViews" Hover="true">
+            <HeaderContent>
+                <MudTh>Name</MudTh>
+                <MudTh>State</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Name">@context.Value.Name</MudTd>
+                <MudTd DataLabel="State">@context.Value.State</MudTd>
+            </RowTemplate>
+        </MudTable>
+    }
+
+</MudPaper>
+
+<MudPaper Elevation="2" Class="ma-4 pa-4">
+    <h2>Jobs</h2>
+    
+    @if (_jobViews.Any())
+    {
+        <div class="m-6">
+            <div class="row">
+                Completed @_jobStore.CompletedJobs of @_jobStore.TotalJobs total
+            </div>
+            <div class="row">
+                <MudProgressLinear Color="Color.Primary" Value="@_progress" Class="ma-6" />
+            </div>
+        </div>
+        
+        <MudTable Items="@_jobViews" Hover="true">
+            <HeaderContent>
+                <MudTh>Key</MudTh>
+                <MudTh>Description</MudTh>
+                <MudTh>Type</MudTh>
+                <MudTh>Status</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Key">@context.Value.Key</MudTd>
+                <MudTd DataLabel="Description>">@context.Value.Display</MudTd>
+                <MudTd DataLabel="Type">@context.Value.Priority</MudTd>
+                <MudTd DataLabel="Status">@context.Value.Status</MudTd>
+            </RowTemplate>
+        </MudTable>
+    }
+    else
+    {
+        <MudAlert Severity="Severity.Success">There are currently no unfinished jobs</MudAlert>
+    }
+    
+
+</MudPaper>
+
+@code {
+    private Dictionary<Guid, WorkerView> _workerViews = null!;
+    private IDisposable? _workerSubscription = null;
+    
+    private Dictionary<Guid, JobView> _jobViews = null!;
+    private IDisposable? _jobSubscription = null;
+    private double _progress = 0;
+    
+    protected override async void OnInitialized()
+    {
+        var context = SynchronizationContext.Current;
+        if (context is null)
+        {
+            throw new NullReferenceException("There appears to be no current synchronization context");
+        }
+
+        _workerViews = new Dictionary<Guid, WorkerView>();
+        foreach (var view in _workers.GetAllViews())
+        {
+            _workerViews[view.Id] = view;
+        }
+        
+        _jobViews = new Dictionary<Guid, JobView>();
+        foreach (var v in await _jobStore.GetAllViews())
+        {
+            _jobViews[v.Id] = v;
+        }
+        _progress = _jobStore.TotalJobs > 0 ? (double)_jobStore.CompletedJobs / _jobStore.TotalJobs * 100.0 : 0;
+        
+        _jobSubscription = _jobStore.JobUpdates.ObserveOn(context).Subscribe(JobUpdate);
+        _workerSubscription = _workers.Updates.ObserveOn(context).Subscribe(WorkerUpdate);
+    }
+
+    private void WorkerUpdate(ViewUpdate<WorkerView> update)
+    {
+        switch (update.Type)
+        {
+            case UpdateType.Add:
+                _workerViews[update.View.Id] = update.View;
+                break;
+            case UpdateType.Delete:
+                _workerViews.Remove(update.View.Id);
+                break;
+            case UpdateType.Update:
+                _workerViews[update.View.Id] = update.View;
+                break;
+        }
+        this.StateHasChanged();
+    }
+
+    private void JobUpdate(ViewUpdate<JobView> update)
+    {
+        switch (update.Type)
+        {
+            case UpdateType.Add:
+                _jobViews[update.View.Id] = update.View;
+                break;
+            case UpdateType.Delete:
+                _jobViews.Remove(update.View.Id);
+                break;
+            case UpdateType.Update:
+                _jobViews[update.View.Id] = update.View;
+                break;
+        }
+        _progress = _jobStore.TotalJobs > 0 ? (double)_jobStore.CompletedJobs / _jobStore.TotalJobs * 100.0 : 0;
+        this.StateHasChanged();
+    }
+
+
+    public void Dispose()
+    {
+        _jobSubscription?.Dispose();
+    }
+
+}
