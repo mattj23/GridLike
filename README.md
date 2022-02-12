@@ -5,6 +5,8 @@
 
 **GridLike** is a simple HTTP/Websocket based central work queue server to serve as the middleware for an improvised grid-like system for distributed computational workloads.  It acts as both a job registry and a work orchestrator, distributing binary payloads directly to *workers* who have registered to it, and receiving binary payloads back from them.  It retains these using a storage backend so they can be retrieved or sent back to the clients who submitted them.
 
+**Check out the documentation at [https://gridlike.readthedocs.io](https://gridlike.readthedocs.io/en/latest/)**
+
 ## Overview
 
 ### Why GridLike?
@@ -51,7 +53,6 @@ Initially, the problem I was faced with that lead to the creation of **GridLike*
 
 It would be possible to implement a traditional HTTP endpoint which non-websocket based workers could access through polling (or long-polling, perhaps).  This hasn't been done but if it's useful I would be willing to look at adding it.
 
-## Getting Started
 
 
 
