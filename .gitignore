@@ -1,6 +1,11 @@
-**/.idea/
+# IDE settings
+.idea/
+.vscode/
+
+# Development configuration files
 appsettings.Development.json
 
+# C#
 *.suo
 *.user
 .vs/
@@ -9,6 +14,10 @@ appsettings.Development.json
 _UpgradeReport_Files/
 [Pp]ackages/
 
+# OS Misc
 Thumbs.db
 Desktop.ini
 .DS_Store
+
+# Documentation/Sphinx
+docs/_build/
