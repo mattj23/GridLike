@@ -12,11 +12,7 @@ public class SimpleSigninProvider : ISigninProvider
         _config = config;
     }
 
-    public record Config
-    {
-        public string User { get; init; }
-        public string Password { get; init; }
-    }
+    public record Config(string User, string Password);
 
     public Task<ClaimsIdentity?> Authenticate(string userName, string password)
     {

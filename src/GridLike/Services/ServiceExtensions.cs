@@ -79,7 +79,7 @@ namespace GridLike.Services
             if (!jobTypes.Any() && !hasJobs)
             {
                 // Database is empty, create records as necessary
-                foreach (var type in config.JobTypes)
+                foreach (var type in config!.JobTypes)
                     context.JobTypes.Add(new JobType { Name = type.Name, Description = type.Description });
 
                 context.SaveChanges();
@@ -102,7 +102,7 @@ namespace GridLike.Services
             }
             else
             {
-                if (jobTypes.Length != config.JobTypes.Count)
+                if (jobTypes.Length != config!.JobTypes.Count)
                     throw new ApplicationException(
                         $"The database contains {jobTypes.Length} job types but the current configuration contains " +
                         $"{config.JobTypes.Count}. Has the configuration changed since this database was last empty?");

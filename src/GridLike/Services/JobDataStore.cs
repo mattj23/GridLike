@@ -73,7 +73,7 @@ namespace GridLike.Services
         {
             var source = new TaskCompletionSource<JobView?>();
 
-            _scheduler.Schedule(async () =>
+            _scheduler.Schedule(() =>
             {
                 var target = NextJobUnsafe();
                 if (target is null)
@@ -184,7 +184,7 @@ namespace GridLike.Services
         {
             /* This should be safe to be called from any thread because all other operations which would be performed
              on the job will not yet know that it exists. */
-            if (_jobKeys.ContainsKey(job.Key))
+            if (_jobKeys.ContainsKey(job.Key ?? job.Id.ToString()))
             {
                 throw new DuplicateNameException();
             }
@@ -224,7 +224,7 @@ namespace GridLike.Services
                 throw new Exception("Couldn't get database context from service collection");
             }
             
-            _jobKeys.Remove(job.Key, out var _);
+            _jobKeys.Remove(job.Key ?? job.Id.ToString(), out _);
             _jobs.Remove(job.Id, out var _);
 
             var fetched = await context.Jobs.FindAsync(job.Id);
@@ -273,6 +273,7 @@ namespace GridLike.Services
             foreach (var job in await context.Jobs.ToListAsync())
             {
                 _jobs[job.Id] = job;
+                // TODO: what's going on here?
                 _jobKeys[job.Key] = job.Id;
             }
 

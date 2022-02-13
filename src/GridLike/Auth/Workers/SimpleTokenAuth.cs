@@ -20,8 +20,5 @@ public class SimpleTokenAuth : IWorkerAuthenticator
         return Task.FromResult(result);
     }
 
-    public record Config
-    {
-        public string Token { get; init; }
-    }
+    public record Config(string Token);
 }

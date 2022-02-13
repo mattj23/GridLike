@@ -110,7 +110,7 @@ namespace GridLike.Controllers
                     Status = JobStatus.Pending
                 });
             }
-            catch (DuplicateNameException e)
+            catch (DuplicateNameException)
             {
                 return BadRequest(new
                     { problem = $"A job with the key {submit.Key} already exists" });

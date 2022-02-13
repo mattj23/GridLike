@@ -48,7 +48,7 @@ public class AuthController : ControllerBase
 
     public class Data
     {
-        public string User { get; set; }
-        public string Password { get; set; }
+        public string User { get; set; } = null!;
+        public string Password { get; set; } = null!;
     }
 }

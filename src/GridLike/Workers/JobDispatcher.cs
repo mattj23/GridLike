@@ -94,7 +94,7 @@ namespace GridLike.Workers
             bool retrieved = _active.TryRemove(workerId, out var activeJob);
             if (!retrieved) return;
             
-            activeJob.BinarySubscription.Dispose();
+            activeJob!.BinarySubscription.Dispose();
             
             using var scope = _scopeFactory.CreateScope();
             var storage = scope.ServiceProvider.GetService<IStorageProvider>();
@@ -103,7 +103,7 @@ namespace GridLike.Workers
             using var memStream = new MemoryStream();
             await memStream.WriteAsync(payload);
             memStream.Seek(0, 0);
-            storage.PutFile(jobResultName, memStream, memStream.Length);
+            storage!.PutFile(jobResultName, memStream, memStream.Length);
 
             await _jobStore.SetJobDone(activeJob.JobId);
             _binaryRecieved.OnNext(workerId);
@@ -125,11 +125,8 @@ namespace GridLike.Workers
             }
 
             worker.SetBusy();
-            _active[worker.Id] = new ActiveJob
-            {
-                JobId = reserved.Id,
-                BinarySubscription = worker.BinaryMessages.Subscribe(t => ReceiveBinary(t.Item1, t.Item2))
-            };
+            _active[worker.Id] =
+                new ActiveJob(worker.BinaryMessages.Subscribe(t => ReceiveBinary(t.Item1, t.Item2)), reserved.Id);
             
             _logger.LogDebug("Scheduling transfer of {0} to {1}", reserved.Key, worker.Name);
             TaskPoolScheduler.Default.Schedule(async () =>
@@ -154,10 +151,7 @@ namespace GridLike.Workers
             while (await DispatchOne()) { }
         }
 
-        private record ActiveJob
-        {
-            public IDisposable BinarySubscription { get; init; }
-            public Guid JobId { get; init; }
-        }
+        private record ActiveJob(IDisposable BinarySubscription, Guid JobId);
+        
     }
 }

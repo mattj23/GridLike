@@ -12,7 +12,7 @@ namespace GridLike.Models
             {
                 Id = job.Id,
                 Status = job.Status,
-                Key = job.Key,
+                Key = job.Key ?? job.Id.ToString(),
                 Priority = job.Priority,
                 Submitted = job.Submitted,
                 Started = job.Started,
