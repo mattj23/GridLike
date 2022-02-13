@@ -21,10 +21,10 @@ namespace GridLike.Data.Models
         [MaxLength(32)] public string? Key { get; set; }
 
         /// <summary>
-        /// Gets or sets a string indicating the job type. If that feature is not enabled, this will always remain null,
+        /// Gets or sets the integer ID of the job type. If that feature is not enabled, this will always remain null,
         /// otherwise it needs to be specified to match a valid job type.
         /// </summary>
-        [MaxLength(32)] public string? Type { get; set; }
+        public int? TypeId { get; set; }
         
         /// <summary>
         /// Gets or sets an integer which includes this job in a batch.  Batches are akin to pages, and allow querying

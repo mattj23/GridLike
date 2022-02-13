@@ -1,5 +1,6 @@
 using GridLike.Auth;
 using GridLike.Auth.Api;
+using GridLike.Models;
 using GridLike.Services;
 using GridLike.Services.Storage;
 using GridLike.Workers;
@@ -33,6 +34,9 @@ if (builder.Configuration.GetValue<bool>("SslOffload"))
 // ====================================================================================================================
 // Add services to the container.
 // ====================================================================================================================
+// Server Configuration Options
+var serverConfig = builder.Configuration.GetSection("ServerOptions").GetServerConfiguration();
+builder.Services.AddSingleton(serverConfig);
 
 // Storage and database
 // ====================================================================================================================
@@ -64,8 +68,9 @@ builder.Services.AddServerSideBlazor();
 // ====================================================================================================================
 var app = builder.Build();
 
-// Ensure the database is created and up to date
+// Ensure the database is created, up to date, and consistent with the static configuration
 app.ApplyMigrations();
+app.ApplyBaseData();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

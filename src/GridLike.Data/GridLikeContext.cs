@@ -13,6 +13,8 @@ namespace GridLike.Data
 
         public DbSet<WorkerRecord> Workers { get; set; } = null!;
 
+        public DbSet<JobType> JobTypes { get; set; } = null!;
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
         }
@@ -20,6 +22,7 @@ namespace GridLike.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<WorkerRecord>().HasIndex(w => w.UniqueId).IsUnique();
+            modelBuilder.Entity<JobType>().HasIndex(t => t.Name).IsUnique();
         }
     }
 }
