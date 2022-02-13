@@ -8,23 +8,21 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.1" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.1">
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.2">
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         <PrivateAssets>all</PrivateAssets>
-      </PackageReference>
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.1" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.1">
-        <PrivateAssets>all</PrivateAssets>
-        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
       <PackageReference Include="Minio" Version="3.1.13" />
-      <PackageReference Include="MudBlazor" Version="6.0.2" />
-      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.2" />
-      <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.0" />
+      <PackageReference Include="MudBlazor" Version="6.0.6" />
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
       <PackageReference Include="System.Reactive" Version="5.0.0" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.3" />
-      <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\GridLike.Data\GridLike.Data.csproj" />
+      <ProjectReference Include="..\GridLike.Migrations.MySQL\GridLike.Migrations.MySQL.csproj" />
+      <ProjectReference Include="..\GridLike.Migrations.PosgreSQL\GridLike.Migrations.PosgreSQL.csproj" />
+      <ProjectReference Include="..\GridLike.Migrations.Sqlite\GridLike.Migrations.Sqlite.csproj" />
     </ItemGroup>
 
 </Project>

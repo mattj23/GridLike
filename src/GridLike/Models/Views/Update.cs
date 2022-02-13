@@ -1,4 +1,4 @@
-﻿namespace GridLike.Data.Views
+﻿namespace GridLike.Models.Views
 {
     public enum UpdateType
     {

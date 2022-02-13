@@ -8,7 +8,7 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading;
 using System.Threading.Tasks;
-using GridLike.Data.Views;
+using GridLike.Models.Views;
 using GridLike.Services;
 using GridLike.Services.Storage;
 using Microsoft.EntityFrameworkCore.Infrastructure.Internal;

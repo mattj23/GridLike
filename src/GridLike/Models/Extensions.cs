@@ -1,10 +1,8 @@
-﻿using System;
-using GridLike.Data.Models;
-using GridLike.Data.Views;
+﻿using GridLike.Data.Models;
+using GridLike.Models.Views;
 using GridLike.Workers;
-using Microsoft.AspNetCore.Components;
 
-namespace GridLike.Data
+namespace GridLike.Models
 {
     public static class Extensions
     {

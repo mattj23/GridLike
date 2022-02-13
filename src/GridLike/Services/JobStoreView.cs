@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using GridLike.Data.Views;
+using GridLike.Models.Views;
 using Microsoft.Extensions.Logging;
 
 namespace GridLike.Services

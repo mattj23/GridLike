@@ -1,7 +1,6 @@
-﻿using System;
-using GridLike.Data.Models;
+﻿using GridLike.Data.Models;
 
-namespace GridLike.Data.Views
+namespace GridLike.Models.Views
 {
     public record JobView
     {

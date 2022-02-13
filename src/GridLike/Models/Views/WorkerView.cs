@@ -1,7 +1,6 @@
-using System;
 using GridLike.Workers;
 
-namespace GridLike.Data.Views
+namespace GridLike.Models.Views
 {
     public record WorkerView
     {
