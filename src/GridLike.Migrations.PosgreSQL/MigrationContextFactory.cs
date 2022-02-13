@@ -9,7 +9,7 @@ public class MigrationContextFactory : IDesignTimeDbContextFactory<GridLikeConte
     public GridLikeContext CreateDbContext(string[] args)
     {
         var builder = new DbContextOptionsBuilder<GridLikeContext>();
-        builder.UseNpgsql(x => x.MigrationsAssembly("GridLike.Migrations.PostgreSQL"));
+        builder.UseNpgsql(b => b.MigrationsAssembly("GridLike.Migrations.PosgreSQL"));
         return new GridLikeContext(builder.Options);
     }
 }

@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace GridLike.Migrations
+namespace GridLike.Migrations.PosgreSQL.Migrations
 {
     public partial class Initial : Migration
     {
@@ -30,7 +30,7 @@ namespace GridLike.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Key = table.Column<string>(type: "character varying(32)", maxLength: 32, nullable: true),
-                    Type = table.Column<string>(type: "character varying(32)", maxLength: 32, nullable: true),
+                    TypeId = table.Column<int>(type: "integer", nullable: true),
                     BatchId = table.Column<int>(type: "integer", nullable: false),
                     FromId = table.Column<Guid>(type: "uuid", nullable: true),
                     Status = table.Column<int>(type: "integer", nullable: false),
@@ -44,6 +44,21 @@ namespace GridLike.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Jobs", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "JobTypes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "character varying(32)", maxLength: 32, nullable: false),
+                    Description = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: true),
+                    BecomesId = table.Column<int>(type: "integer", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JobTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -61,6 +76,12 @@ namespace GridLike.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_JobTypes_Name",
+                table: "JobTypes",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Workers_UniqueId",
                 table: "Workers",
                 column: "UniqueId",
@@ -74,6 +95,9 @@ namespace GridLike.Migrations
 
             migrationBuilder.DropTable(
                 name: "Jobs");
+
+            migrationBuilder.DropTable(
+                name: "JobTypes");
 
             migrationBuilder.DropTable(
                 name: "Workers");

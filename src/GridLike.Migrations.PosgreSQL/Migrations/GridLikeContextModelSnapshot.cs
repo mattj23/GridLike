@@ -8,7 +8,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace GridLike.Migrations
+namespace GridLike.Migrations.PosgreSQL.Migrations
 {
     [DbContext(typeof(GridLikeContext))]
     partial class GridLikeContextModelSnapshot : ModelSnapshot
@@ -17,7 +17,7 @@ namespace GridLike.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.1")
+                .HasAnnotation("ProductVersion", "6.0.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -56,9 +56,8 @@ namespace GridLike.Migrations
                     b.Property<DateTime>("Submitted")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Type")
-                        .HasMaxLength(32)
-                        .HasColumnType("character varying(32)");
+                    b.Property<int?>("TypeId")
+                        .HasColumnType("integer");
 
                     b.Property<int?>("WorkerId")
                         .HasColumnType("integer");
@@ -85,6 +84,34 @@ namespace GridLike.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Batches");
+                });
+
+            modelBuilder.Entity("GridLike.Data.Models.JobType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("BecomesId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("character varying(32)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("JobTypes");
                 });
 
             modelBuilder.Entity("GridLike.Data.Models.WorkerRecord", b =>

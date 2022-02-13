@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace GridLike.Migrations
+namespace GridLike.Migrations.MySQL.Migrations
 {
     [DbContext(typeof(GridLikeContext))]
     partial class GridLikeContextModelSnapshot : ModelSnapshot
@@ -16,7 +16,7 @@ namespace GridLike.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.1")
+                .HasAnnotation("ProductVersion", "6.0.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("GridLike.Data.Models.Job", b =>
@@ -53,9 +53,8 @@ namespace GridLike.Migrations
                     b.Property<DateTime>("Submitted")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("Type")
-                        .HasMaxLength(32)
-                        .HasColumnType("varchar(32)");
+                    b.Property<int?>("TypeId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("WorkerId")
                         .HasColumnType("int");
@@ -80,6 +79,32 @@ namespace GridLike.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Batches");
+                });
+
+            modelBuilder.Entity("GridLike.Data.Models.JobType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int?>("BecomesId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(128)
+                        .HasColumnType("varchar(128)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("varchar(32)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("JobTypes");
                 });
 
             modelBuilder.Entity("GridLike.Data.Models.WorkerRecord", b =>

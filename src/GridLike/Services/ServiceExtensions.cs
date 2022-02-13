@@ -21,9 +21,9 @@ namespace GridLike.Services
                     services.AddDbContext<GridLikeContext>(o => o.UseSqlite(connectionString,
                         x => x.MigrationsAssembly("GridLike.Migrations.Sqlite")));
                     break;
-                case "postgres":
+                case "posgres":
                     services.AddDbContext<GridLikeContext>(o => o.UseNpgsql(connectionString,
-                        x => x.MigrationsAssembly("GridLike.Migrations.PostgreSQL")));
+                        x => x.MigrationsAssembly("GridLike.Migrations.PosgreSQL")));
                     break;
                 case "mysql":
                     services.AddDbContext<GridLikeContext>(o => o.UseMySql(connectionString,
