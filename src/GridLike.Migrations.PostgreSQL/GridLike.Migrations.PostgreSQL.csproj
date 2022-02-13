@@ -5,6 +5,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <GenerateRuntimeConfigurationFiles>True</GenerateRuntimeConfigurationFiles>
+        <RootNamespace>GridLike.Migrations.PostgreSQL</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

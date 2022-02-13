@@ -21,7 +21,7 @@
     <ItemGroup>
       <ProjectReference Include="..\GridLike.Data\GridLike.Data.csproj" />
       <ProjectReference Include="..\GridLike.Migrations.MySQL\GridLike.Migrations.MySQL.csproj" />
-      <ProjectReference Include="..\GridLike.Migrations.PosgreSQL\GridLike.Migrations.PosgreSQL.csproj" />
+      <ProjectReference Include="..\GridLike.Migrations.PostgreSQL\GridLike.Migrations.PostgreSQL.csproj" />
       <ProjectReference Include="..\GridLike.Migrations.Sqlite\GridLike.Migrations.Sqlite.csproj" />
     </ItemGroup>
 

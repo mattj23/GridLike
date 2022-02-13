@@ -3,19 +3,17 @@ using System;
 using GridLike.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace GridLike.Migrations.PosgreSQL.Migrations
+namespace GridLike.Migrations.PostgreSQL.Migrations
 {
     [DbContext(typeof(GridLikeContext))]
-    [Migration("20220213045712_Initial")]
-    partial class Initial
+    partial class GridLikeContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -6,7 +6,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GridLike.Migrations.MySQL",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GridLike.Migrations.Sqlite", "GridLike.Migrations.Sqlite\GridLike.Migrations.Sqlite.csproj", "{A45D10BE-584E-4E06-B76E-DD44039B2F5C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GridLike.Migrations.PosgreSQL", "GridLike.Migrations.PosgreSQL\GridLike.Migrations.PosgreSQL.csproj", "{35ABBE02-6004-40B9-AB34-0262D651A989}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GridLike.Migrations.PostgreSQL", "GridLike.Migrations.PostgreSQL\GridLike.Migrations.PostgreSQL.csproj", "{35ABBE02-6004-40B9-AB34-0262D651A989}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GridLike.Data", "GridLike.Data\GridLike.Data.csproj", "{3DA68DA0-F9EB-43A8-A192-1B7CE022106E}"
 EndProject
