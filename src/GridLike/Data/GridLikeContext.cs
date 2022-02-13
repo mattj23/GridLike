@@ -9,12 +9,17 @@ namespace GridLike.Data
         
         public DbSet<Job> Jobs { get; set; } = null!;
 
+        public DbSet<JobBatch> Batches { get; set; } = null!;
+
+        public DbSet<WorkerRecord> Workers { get; set; } = null!;
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<WorkerRecord>().HasIndex(w => w.UniqueId).IsUnique();
         }
     }
 }

@@ -13,6 +13,15 @@ Configuration
                 "Microsoft.AspNetCore": "Warning"
             }
         },
+        "JobTypes": {
+            "MyType0": {
+                "Description": "This is the initial job type for a 2 stage processing",
+                "ResultBecomes": "MyType1"
+            },
+            "MyType1": {
+                "Description": null,
+            }
+        },
         "Database": {
             "Type": "sqlite",
             "ConnectionString": "Data Source=/tmp/database.db"
@@ -35,8 +44,37 @@ Configuration
                 "User": "user",
                 "Password": "guest"
             }
+        },
+        "WorkerTracking": false,
+        "BatchSize": 100,
+        "PathBase": "/prefix"
+        "DisableHttpsRedirect": false,
+        "SSLOffload": false
+    }
+
+Job Types
+=========
+
+Job types are an optional feature specified with the :code:`JobTypes` field in the configuration.  The entire section can be omitted or set to :code:`null` if the feature isn't being used.
+
+The primary reason to use this feature is to allow the results of one type of job to become new jobs of a different type without requiring a round trip out and back from the data store.  This is only useful if you have heterogenous workers which cannot process a single job through to completion.
+
+Job types must have a unique string name which will be used to identify them to both clients and workers through the interface and endpoint URLs.  Optionally, a job type can have a :code:`"ResultBecomes"` field which must be a valid name of another job type. Do not create circular references.
+
+.. code-block:: json
+
+    "JobTypes": {
+        "MyType0": {
+            "Description": "This is the initial job type for a 2 stage processing",
+            "ResultBecomes": "MyType1"
+        },
+        "MyType1": {
+            "Description": null,
         }
     }
+
+
+
 
 Database provider
 =================

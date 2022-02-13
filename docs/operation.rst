@@ -25,7 +25,9 @@ Internally, jobs are referenced only by a GUID which is generated on the server 
 
 If the string key is supplied, it must be unique.  If it is not unique, a 400 bad request will be returned from the server.  If the key is not supplied, the job's GUID will serve in place of the key text in both the API and the web interfaces.
 
-If the job is successfully submitted, the binary payload is sent to the storage backend and stored by the GUID.  A metadata entry is generated with the GUID, the key, the priority, the optional description, and the current UTC time as the submission time.  The metadata status is set to "pending", and sent to the job registry.
+Jobs are assigned to a "batch", which is a group of configurable maximum size which share a common integer batch ID. Batches only contain jobs of a single type, and are created sequentially. When a job is submitted it is assigned to the current batch for that job type. When the batch has reached the maximum size, no new jobs will be included in that batch and queries by the batch ID can be considered stable.
+
+If the job is successfully submitted, the binary payload is sent to the storage backend and stored by the GUID.  A metadata entry is generated with the GUID, the batch ID, the key, the priority, and the current UTC time as the submission time.  The metadata status is set to "pending", and sent to the job registry.
 
 Job Registry
 ------------
@@ -194,3 +196,4 @@ The job dispatcher must perform the following in a thread-safe way:
 * Dispatch failed jobs to a different worker than the one they last failed on
 * Lower the priority of failed jobs so that they don't clog up the work queue
 * Determine when a worker working on a job disconnects and reset the job
+* Determine when jobs appear to be stuck
