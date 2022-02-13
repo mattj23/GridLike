@@ -105,7 +105,6 @@ namespace GridLike.Controllers
                 {
                     Id = jobId,
                     Key = submit.Key,
-                    Display = submit.Description,
                     Priority = priority,
                     Submitted = DateTime.UtcNow,
                     Status = JobStatus.Pending

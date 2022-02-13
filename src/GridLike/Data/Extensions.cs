@@ -15,7 +15,6 @@ namespace GridLike.Data
                 Id = job.Id,
                 Status = job.Status,
                 Key = job.Key,
-                Display = job.Display,
                 Priority = job.Priority,
                 Submitted = job.Submitted,
                 Started = job.Started,
